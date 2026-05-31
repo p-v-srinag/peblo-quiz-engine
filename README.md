@@ -64,8 +64,11 @@ FastAPI automatically generates an interactive testing UI. Once the server is ru
 From this interface, you can test the entire pipeline in order:
 
 1. **`POST /ingest`**: Upload a PDF file, assign it a grade, subject, and topic. The system will extract the text, chunk it, and save the chunks to MongoDB.
+
 2. **`POST /generate-quiz`**: Provide a topic (e.g., "Machine Learning"). The system queries the database for relevant chunks and prompts the LLM to generate MCQ, True/False, and Fill-in-the-blank questions.
+
 3. **`GET /quiz`**: Retrieve a list of generated questions filtered by topic and difficulty level.
+
 4. **`POST /submit-answer`**: Accepts student answers, validates them, and adjusts the student's difficulty profile.
 
 ##  Adaptive Difficulty Logic
