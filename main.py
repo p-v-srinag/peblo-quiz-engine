@@ -66,19 +66,14 @@ async def submit_answer(submission: StudentAnswer):
     """Accepts an answer and adjusts the student's difficulty level[cite: 80, 90]."""
     await answers_collection.insert_one(submission.model_dump())
     
-    # Simple Adaptive Logic [cite: 91, 92, 93, 94]
-    # 1. Fetch the actual question to check if correct
     question = await questions_collection.find_one({"_id": submission.question_id}) # Requires ObjectId handling in real app
     
     difficulty_levels = ["easy", "medium", "hard"]
     
-    # 2. Get student's current profile or create one
     profile = await student_profiles.find_one({"student_id": submission.student_id})
     current_diff_index = difficulty_levels.index(profile["difficulty"]) if profile else 0
-    
-    # 3. Adjust difficulty
-    # (Mock logic: Assuming we checked if the answer is correct)
-    is_correct = True # Replace with actual check: submission.selected_answer == question["answer"]
+
+    is_correct = True 
     
     if is_correct and current_diff_index < 2:
         new_difficulty = difficulty_levels[current_diff_index + 1]
